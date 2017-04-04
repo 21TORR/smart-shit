@@ -4,9 +4,9 @@ Walking to the toilets just to find them currently occupied is a pretty bad thin
 
 ## The Hardware
 
-### Cloud Model
+### Cloud Box
 
-The printed box containing the boards is derived from Thingiverse #606055 by mrtial (http://bit.ly/2o5Qejy), repaired to a valid 2-manifold for printing using MakePrintable (http://bit.ly/2o3OLLq) and FreeCad (http://bit.ly/2nTuqFH) and resized to 70%.
+The model for the 3D printed box containing the boards is derived from Thingiverse #606055 by mrtial (http://bit.ly/2o5Qejy), repaired to a valid 2-manifold for printing using MakePrintable (http://bit.ly/2o3OLLq) and FreeCad (http://bit.ly/2nTuqFH) and resized to 70%.
 
 ### Controller Board
 
