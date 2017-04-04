@@ -8,4 +8,4 @@ The printed box containing the boards is derived from Thingiverse #606055 by mrt
 
 ## Controller Board
 
-The boards are Adafruit WICED WiFi Feather boards that are powerful enough to handle the MQTT/HTTP via TLS 1.2 Certs requests required by AWS IoT.
+The boards are Adafruit WICED WiFi Feather boards (http://bit.ly/2n7PBXA) that are powerful enough to handle the MQTT/HTTP via TLS 1.2 Certs requests required by AWS IoT.
