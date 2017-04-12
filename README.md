@@ -21,6 +21,8 @@ The boards are Adafruit WICED WiFi Feather boards (http://bit.ly/2n7PBXA) that a
 The Feather Boards have a very simple software setup using the AWS IoT SDK, connecting to the AWS Cloud on Powerup and then watching for the swich to be triggered, updating the status in AWS IoT. The Boards do a reconnect if dropped from Wifi and do a regular status send as a timeout too to catch any lost messages that might have happened due to a connection loss or power outage.
 
 #### Setup
+ - Setup your Arduino IDE for usage of the Adafruit WICED Feather Boards by adding them in the Boards Manager
+ - Make sure you got the Adafruit MQTT Library installed
  - Create wlan.h file as specified below
  - Create an account or log in at http://aws.amazon.com/iot
  - Create a THING and name it
@@ -37,10 +39,10 @@ The Feather Boards have a very simple software setup using the AWS IoT SDK, conn
 
 #### config.h
 ```c
-#define AWS_IOT_MQTT_HOST              "<AWS_IOT_MQTT_HOST>"
-#define AWS_IOT_MQTT_PORT              <AWS_IOT_MQTT_PORT>
-#define AWS_IOT_MQTT_CLIENT_ID         "<AWS_IOT_MQTT_CLIENT_ID>"
-#define AWS_IOT_MY_THING_NAME          "<AWS_IOT_MY_THING_NAME>"
+#define AWS_IOT_MQTT_HOST              "AWS_IOT_MQTT_HOST"
+#define AWS_IOT_MQTT_PORT              AWS_IOT_MQTT_PORT
+#define AWS_IOT_MQTT_CLIENT_ID         "AWS_IOT_MQTT_CLIENT_ID"
+#define AWS_IOT_MY_THING_NAME          "AWS_IOT_MY_THING_NAME"
 ```
 
 #### certificates.h
