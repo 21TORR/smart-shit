@@ -1,4 +1,5 @@
 *.crt
 *.key
 Board/certificates.h
+Board/wlan.h
 Board/privatekey.h
