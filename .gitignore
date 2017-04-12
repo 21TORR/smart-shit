@@ -1,2 +1,4 @@
+*.crt
+*.key
 Board/certificates.h
 Board/privatekey.h
