@@ -2,4 +2,5 @@
 *.key
 Board/certificates.h
 Board/wlan.h
+Board/config.h
 Board/privatekey.h
