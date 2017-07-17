@@ -65,7 +65,7 @@ void setup()
   mqtt.tlsSetIdentity(aws_private_key, local_cert, LOCAL_CERT_LEN);
 
   // Connect with SSL/TLS
-  mqtt.connectSSL(AWS_IOT_MQTT_HOST, AWS_IOT_MQTT_PORT);
+  mqtt.connectSSL(AWS_IOT_MQTT_HOST, AWS_IOT_MQTT_PORT, true, 3600);
   mqtt.subscribe(AWS_IOT_MQTT_TOPIC, MQTT_QOS_AT_LEAST_ONCE, subscribed_callback);
 }
 
@@ -94,7 +94,7 @@ void loop()
 
   //Ok so the door is no longer open, send this information out to AWS
   digitalWrite(ledPin, HIGH);
-  sendToAWS(0);
+  sendToAWS(1);
 
   //And now we wait until the business is finished and the door is opened again, let's blink
   // the led just for fun...
@@ -111,11 +111,16 @@ void loop()
 
   //Ok so the door is open again, send this to AWS and then go back to the start of the loop
   digitalWrite(ledPin, HIGH);
-  sendToAWS(1);
+  sendToAWS(0);
 }
 
 void sendToAWS(bool door)
 {
+  if(!Feather.connected())
+  {
+    setup();
+  }
+  
   //Get Analog Read from VBAT Pin
   //Actually for the 21TORR solution where everything is powered by wire this is not necessary
   //But we built this into the code when we planned to use battery power at the first stage of the experiment
