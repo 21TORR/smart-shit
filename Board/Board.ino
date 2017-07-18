@@ -97,7 +97,7 @@ void loop()
 
   //Ok so the door is no longer open, send this information out to AWS
   digitalWrite(ledPin, HIGH);
-  sendToAWS("CLOSED");
+  sendToAWS("LOCKED");
 
   //And now we wait until the business is finished and the door is opened again, let's blink
   // the led just for fun...
@@ -106,7 +106,7 @@ void loop()
     if(timeout++ > 300)
     {
       timeout = 0;
-      sendToAWS("CLOSED");
+      sendToAWS("LOCKED");
     }
     delay(1000);
     digitalWrite(ledPin, !digitalRead(ledPin));
