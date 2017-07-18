@@ -20,6 +20,8 @@ AdafruitMQTT mqtt;
 
 int timeout = 0;
 
+String ver = "0.2";
+
 #define AWS_IOT_MQTT_TOPIC             "$aws/things/" AWS_IOT_MY_THING_NAME "/shadow/update"
 
 /**************************************************************************/
@@ -66,7 +68,8 @@ void setup()
 
   // Connect with SSL/TLS
   mqtt.connectSSL(AWS_IOT_MQTT_HOST, AWS_IOT_MQTT_PORT, true, 3600);
-  mqtt.subscribe(AWS_IOT_MQTT_TOPIC, MQTT_QOS_AT_LEAST_ONCE, subscribed_callback);
+
+  sendToAWS("STARTED");
 }
 
 /**************************************************************************/
@@ -87,14 +90,14 @@ void loop()
     if(timeout++ > 300)
     {
       timeout = 0;
-      sendToAWS(0);
+      sendToAWS("OPEN");
     }
     delay(1000);
   }
 
   //Ok so the door is no longer open, send this information out to AWS
   digitalWrite(ledPin, HIGH);
-  sendToAWS(1);
+  sendToAWS("CLOSED");
 
   //And now we wait until the business is finished and the door is opened again, let's blink
   // the led just for fun...
@@ -103,7 +106,7 @@ void loop()
     if(timeout++ > 300)
     {
       timeout = 0;
-      sendToAWS(1);
+      sendToAWS("CLOSED");
     }
     delay(1000);
     digitalWrite(ledPin, !digitalRead(ledPin));
@@ -111,10 +114,10 @@ void loop()
 
   //Ok so the door is open again, send this to AWS and then go back to the start of the loop
   digitalWrite(ledPin, HIGH);
-  sendToAWS(0);
+  sendToAWS("OPEN");
 }
 
-void sendToAWS(bool door)
+void sendToAWS(String statestr)
 {
   if(!Feather.connected())
   {
@@ -132,18 +135,21 @@ void sendToAWS(bool door)
   //Build the string to send to AWS
   String state = "{ \"state\": {\"reported\": { ";
 
-  if(door)
-  {
-    state += "\"door\": \"LOCKED\", ";
-  }
-  else
-  {
-    state += "\"door\": \"OPEN\", ";
-  }
+  state += "\"door\": \"";
+  state += statestr;
+  state += "\", ";
 
   state += "\"vbat\": \"";
 
   state += vbatMV;
+
+  state += "\", ";
+
+  state += "\"version\": \"";
+
+  state += ver;
+  state += " compiled: ";
+  state += __DATE__;
 
   state += "\"";
     
@@ -153,7 +159,7 @@ void sendToAWS(bool door)
   state.toCharArray(schar, 500);
 
   //Actually send this into the mqtt broker queue
-  mqtt.publish(AWS_IOT_MQTT_TOPIC, schar, MQTT_QOS_AT_LEAST_ONCE);
+  mqtt.publish(AWS_IOT_MQTT_TOPIC, schar, MQTT_QOS_AT_MOST_ONCE);
 
   //Give the transmission some time, actually this should not be necessary but if we push multiple messages too
   //fast into the queue it could cause the messages to arrive in the wrong order at AWS and leave the shadow in a wrong state
@@ -182,11 +188,6 @@ bool connectAP(void)
   //Serial.println();
 
   return Feather.connected();
-}
-
-void subscribed_callback(UTF8String topic, UTF8String message)
-{
-  //We don't get pushed anything...
 }
 
 void disconnect_callback(void)
