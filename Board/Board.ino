@@ -20,7 +20,9 @@ AdafruitMQTT mqtt;
 
 int timeout = 0;
 
-String ver = "0.2";
+String ver = "0.3";
+
+int reconnect_counter = 0;
 
 #define AWS_IOT_MQTT_TOPIC             "$aws/things/" AWS_IOT_MY_THING_NAME "/shadow/update"
 
@@ -49,9 +51,11 @@ void setup()
     delay(200); // delay between each attempt
   }
 
+  reconnect_counter = 0;
+
   Feather.printNetwork();
 
-  // MQTT should ignore all errors and never halt the system, errors will be taken are of with the timeouts if something is not recoverable by the MQTT broker itself
+  // MQTT should ignore all errors and never halt the system, errors will be taken care of with the timeouts if something is not recoverable by the MQTT broker itself
   mqtt.err_actions(false, false);
 
   // Set ClientID
@@ -69,7 +73,7 @@ void setup()
   // Connect with SSL/TLS
   mqtt.connectSSL(AWS_IOT_MQTT_HOST, AWS_IOT_MQTT_PORT, true, 3600);
 
-  sendToAWS("STARTED");
+  sendToAWS("CONNECTED");
 }
 
 /**************************************************************************/
@@ -119,7 +123,7 @@ void loop()
 
 void sendToAWS(String statestr)
 {
-  if(!Feather.connected())
+  if(!Feather.connected() || reconnect_counter > 100)
   {
     setup();
   }
@@ -158,8 +162,11 @@ void sendToAWS(String statestr)
   char schar[500];
   state.toCharArray(schar, 500);
 
-  //Actually send this into the mqtt broker queue
-  mqtt.publish(AWS_IOT_MQTT_TOPIC, schar, MQTT_QOS_AT_MOST_ONCE);
+  //Actually send this into the mqtt broker queue, if something fails, go to setup again
+  if(!mqtt.publish(AWS_IOT_MQTT_TOPIC, schar, MQTT_QOS_AT_MOST_ONCE))
+  {
+    setup();
+  }
 
   //Give the transmission some time, actually this should not be necessary but if we push multiple messages too
   //fast into the queue it could cause the messages to arrive in the wrong order at AWS and leave the shadow in a wrong state
