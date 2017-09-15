@@ -1,0 +1,28 @@
+{
+    "port": 8080,
+    "thingName": "yourThingName",
+    "things": [{
+        "thingName": "yourThingName"
+    }, {
+        "thingName": "yourThingName"
+    }, {
+        "thingName": "yourThingName"
+    }, {
+        "thingName": "yourThingName"
+    }, {
+        "thingName": "yourThingName"
+    }, {
+        "thingName": "yourThingName"
+    }, {
+        "thingName": "yourThingName"
+    }, {
+        "thingName": "yourThingName"
+    }, {
+        "thingName": "yourThingName"
+    }],
+    "certName": "yourCert",
+    "prefix": "yorPrefix",
+    "certPath": "yourCerts/",
+    "region": "yourRegion //us-west-2",
+    "host": "yourHost //xxxxxxxxxxxxx.iot.yourRegion.amazonaws.com"
+}

@@ -2,11 +2,11 @@
   "name": "smartShitWebreader",
   "description": "display smart-shit state",
   "author": "Marcel Weber",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "dependencies": {
-    "aws-iot-device-sdk": "^1.0.14",
-    "express": "3.x",
-    "socket.io": "*",
-    "ws": "^2.2.1"
+    "aws-iot-device-sdk": "2.0.0",
+    "express": "4.15.4",
+    "socket.io": "2.0.3",
+    "ws": "3.1.0"
   }
 }
