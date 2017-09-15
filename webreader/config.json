@@ -1,7 +1,0 @@
-{
-	"port": 8080,
-	"thingName" : "yourThingName",
-	"prefix" : "yorPrefix",
-	"certPath" : "yourCerts/",
-	"region" : "yourRegion //us-west-2"
-}
