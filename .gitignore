@@ -5,3 +5,5 @@ Board/wlan.h
 Board/config.h
 Board/privatekey.h
 webreader/config.json
+webreader/public/_index.html
+webreader/public/_style.css
