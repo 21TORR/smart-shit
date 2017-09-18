@@ -101,7 +101,7 @@ And complete your ceredentials
 }
 ```
 
-#### start webserver
+#### Start webserver
 ```sh
 node server.js
 ```
