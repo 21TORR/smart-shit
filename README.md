@@ -71,3 +71,38 @@ This does contain the WiFi Authentication and should look like this:
 #define WLAN_PASS         "IoTPassword"
 ```
 
+## Webreader
+
+We use the AWS IoT Node.js SDK to display the current toilet state in our intranet.
+Webreader is a standalone app based on Node.js, Express, socket.io, jQuery, CSS, HTML, and will be embedded in an iframe in our intranet.
+
+### Setup Webreader
+
+#### Install all dependencies
+```sh
+npm install
+```
+#### Edit and rename private.config.json
+You have to rename the private.config file to config.json
+And complete your ceredentials 
+
+```json
+{
+    "port": 8080,
+    "thingName": "yourThingName",
+    "things": [{
+        "thingName": "yourThingName"
+    }],
+    "certName": "yourCert",
+    "prefix": "yorPrefix",
+    "certPath": "yourCerts/",
+    "region": "yourRegion //us-west-2",
+    "host": "yourHost //xxxxxxxxxxxxx.iot.yourRegion.amazonaws.com"
+}
+```
+
+#### start webserver
+```sh
+node server.js
+```
+Now the Webreader is serverd under localhost:PORT default (localhost:8080)
